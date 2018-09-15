@@ -1,0 +1,30 @@
+morningscene:
+    sequence:
+      - service: media_player.select_source
+        data:
+          entity_id: media_player.spotify
+          source: Living Room Group
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.spotify
+          media_content_type: playlist
+          media_content_id: spotify:user:spotify:playlist:4ZQNqlKwDCPSeey2y7kwlD
+eveningscene:
+    sequence:
+      - service: light.turn_on
+        data:
+          entity_id: group.kitchen
+          brightness: 204
+          rgb_color:
+          - 255
+          - 183
+          - 123
+      - service: media_player.select_source
+        data:
+          entity_id: media_player.spotify
+          source: home mini
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.spotify
+          media_content_type: playlist
+          media_content_id: spotify:user:spotify:playlist:37i9dQZF1DWZd79rJ6a7lp

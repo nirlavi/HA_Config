@@ -1,0 +1,93 @@
+General:
+  name: General
+  control: hidden
+  entities:
+    - sensor.time
+    - alarm_control_panel.homealarm
+    - light.gateway_light_f0b429b41630
+    - light.lightstrip
+    - switch.printer
+presence:
+  name: People
+  entities:
+    - device_tracker.nirs_pixel
+    - device_tracker.yehuda_lavis_iphone
+weather:
+  name: Weather
+  entities:
+    - sensor.dark_sky_temperature
+    - sun.sun
+devices:
+  name: Devices
+  entities:
+    - binary_sensor.livingroom_tv
+    - binary_sensor.mediacenter_pc
+    - binary_sensor.xbox_one
+    - binary_sensor.xbox_one_x
+livingroom:
+  name: Living Room
+  entities:
+kitchen:
+  name: Kitchen
+  entities:
+    - light.kitchen_light1
+    - light.kitchen_light2
+    - light.kitchen_light3
+bedroom:
+  name: Bedroom
+  entities:
+    - sensor.temperature_158d0001635a43
+    - light.bedroom_light1
+    - light.bedroom_light2
+bedroomlights:
+  name: Bedroom Lights
+  entities:
+    - light.bedroom_light1
+    - light.bedroom_light2
+kidsroom:
+  name: Kids Room
+  entities:
+    - sensor.temperature_158d0001718411
+network:
+  name: Network
+  entities:
+    - sensor.fastcom_download
+    - sensor.google_wifi_status
+    - sensor.google_wifi_uptime
+    - sensor.google_wifi_new_version
+scenes:
+  name: Scenes
+  control: hidden
+  entities:
+    - script.morningscene
+    - script.eveningscene
+automations:
+  name: automations
+  view: yes
+  entities:
+    - group.all_automations
+  #  - switch.homeowl 
+security:
+  name: Security
+  entities:
+    - binary_sensor.door_window_sensor_158d000104babc
+    - binary_sensor.motion_sensor_158d00014dc2a4
+    - binary_sensor.motion_sensor_158d000130cd9a
+
+default_view:
+  name: Home
+  view: yes
+  entities:
+    - group.weather
+    - group.presence
+    - group.network
+    - group.devices
+#    - group.livingroom
+    - group.security
+    - group.kitchen
+    - group.general
+    - group.bedroom
+    - group.kidsroom
+    - group.scenes
+    - media_player.spotify
+    

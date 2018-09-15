@@ -1,0 +1,65 @@
+light.bedroom:
+  friendly_name: BedRoom Lightstrip
+  emulated_hue_name: Bedroom Lightstrip
+binary_sensor.motion_sensor_158d000130cd9a:
+  friendly_name: Bedroom Motion Sensor
+binary_sensor.motion_sensor_158d00014dc2a4:
+  friendly_name: Living Room Motion Sensor
+sensor.dark_sky_temperature:
+  friendly_name: Temperature
+sensor.fastcom_download:
+  friendly_name: Download Speed
+  icon: mdi:speedometer
+light.gateway_light_f0b429b41630:
+  friendly_name: Xiaomi Gateway Light
+  emulated_hue_name: Gateway Light
+binary_sensor.door_window_sensor_158d000104babc:
+  friendly_name: Front Door
+binary_sensor.switch_158d00010f436b:
+  friendly_name: Kitchen Lights Button
+  hidden: true
+binary_sensor.switch_158d0001146391:
+  friendly_name: Bedroom Button
+  hidden: true
+sensor.illumination_f0b429b41630:
+  friendly_name: Gateway Light Brightness
+  hidden: true
+sensor.temperature_158d0001635a43:
+  friendly_name: Bedroom Temperature
+sensor.temperature_158d0001718411:
+  friendly_name: Kids Room Temperature
+binary_sensor.mediacenter_pc:
+  device_class: power
+  icon: mdi:theater
+binary_sensor.mi_box:
+  device_class: power
+  icon: mdi:play-network  
+binary_sensor.xbox_one:
+  device_class: power
+  icon: mdi:xbox
+binary_sensor.xbox_one_x:
+  device_class: power
+  icon: mdi:xbox
+binary_sensor.kids_speaker:
+  icon: mdi:speaker
+binary_sensor.livingroom_tv:
+  device_class: power
+  icon: mdi:television
+sensor.google_wifi_status:
+  friendly_name: Wifi
+sensor.google_wifi_uptime:
+  friendly_name: Uptime
+sensor.google_wifi_new_version:
+  friendly_name: New Router Version
+group.kitchen:
+  icon: mdi:lightbulb
+group.bedroomlights:
+  icon: mdi:lightbulb
+switch.printer:
+  icon: mdi:printer-wireless
+group.all_automations:
+  hidden: false
+script.goodnightkids:
+  friendly_name: Good Night Kids
+  icon: mdi:weather-night
+

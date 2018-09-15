@@ -1,0 +1,35 @@
+armalarm:
+  sequence:
+    - service: alarm_control_panel.alarm_arm_away
+      data:
+        entity_id: alarm_control_panel.homealarm
+    - service: tts.google_say
+      data:
+        entity_id: media_player.living_room_speakers
+        message: Arming Alarm in 60 seconds
+    - service: media_player.media_stop
+      entity_id: media_player.living_room
+    - service: media_player.media_stop
+      entity_id: media_player.kidsspeaker
+    - service: media_player.media_stop
+      entity_id: media_player.bedroom
+    - service: light.turn_on
+      entity_id: light.gateway_light_f0b429b41630
+      data:
+        rgb_color:
+        - 255
+        - 0
+        - 0
+        
+disarmalarm:
+  sequence:
+    - service: alarm_control_panel.alarm_disarm
+      data:
+        entity_id: alarm_control_panel.homealarm
+    - service: tts.google_say
+      data:
+        entity_id: media_player.living_room_speakers
+        message: Disarming Alarm
+    - service: light.turn_off
+      entity_id: light.gateway_light_f0b429b41630
+        

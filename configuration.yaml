@@ -1,0 +1,246 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: 32.0666
+  longitude: 34.765
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Jerusalem
+  customize: !include customize.yaml
+# Show links to resources in log and frontend
+#vintroduction:*
+
+# Enables the frontend
+frontend:
+
+  
+
+# Enables configuration UI
+config:
+
+http:
+  # Uncomment this to add a password (recommended!)
+  api_password: !secret api_password
+  # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+  base_url: !secret ha_base_url
+  ssl_certificate: /ssl/fullchain.pem
+  ssl_key: /ssl/privkey.pem
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+discovery:
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Track the sun
+sun:
+
+device_tracker:
+  - platform: bluetooth_tracker   
+
+sensor:
+  - platform: fastdotcom
+    minute:
+      - 0
+  - platform: google_wifi
+    host: !secret google_wifi_ip
+    monitored_conditions:
+      - status
+      - uptime
+      - new_version
+
+#Weather Prediction
+  - platform: darksky
+    monitored_conditions:
+      - temperature
+      - humidity
+      - apparent_temperature
+      - precip_probability
+      - precip_intensity
+      - wind_speed      
+      - wind_bearing
+      - pressure
+      - icon
+      - summary
+    api_key: !secret darksky_key
+  - platform: time_date
+    display_options:
+      - 'time'
+
+alarm_control_panel:
+  - platform: manual
+    name: HomeAlarm
+    pending_time: 30
+    delay_time: 20
+    trigger_time: 4
+    disarmed:
+      trigger_time: 0
+    armed_home:
+      pending_time: 0
+      delay_time: 0
+
+
+#Binary Sensors
+
+binary_sensor:
+  - platform: ping
+    host: !secret livingroom_tv_ip
+    name: "LivingRoom TV"
+  - platform: ping
+    host: !secret mediacenter_ip
+    name: "MediaCenter PC"
+  - platform: ping
+    host: !secret xbox_ip
+    name: "Xbox One X"
+  - platform: ping
+    host: !secret mi_box_ip
+    name: "Mi Box"
+  # - platform: ping
+  #   host: !secret kids_speaker_ip
+  #   name: "Kids Speaker"
+
+
+xiaomi_aqara:
+  gateways:
+    - mac: !secret xiaomi_gw_mac
+      key: !secret xiaomi_gw_key
+
+light:
+  - platform: yeelight
+    devices:
+      !secret yeelight_ip:
+        name: Lightstrip
+        transition: 1000 
+      !secret yeelight_bulb1:
+        name: Kitchen Light1
+        transition: 1000 
+      !secret yeelight_bulb2:
+        name: Kitchen Light2
+        transition: 1000 
+      !secret yeelight_kitchen3:
+        name: Kitchen Light3
+        transition: 1000 
+      !secret yeelight_bedroom1:
+        name: Bedroom Light1
+        transition: 1000 
+      !secret yeelight_bedroom2:
+        name: Bedroom Light2
+        transition: 1000 
+
+notify:
+  - name: Pushover
+    platform: pushover
+    api_key: !secret pushover_apikey
+    user_key: !secret pushover_userkey
+  - name: BedroomTv
+    platform: nfandroidtv
+    host: !secret mi_box_ip
+
+media_player:
+  - platform: cast
+    host: !secret homemini_1_ip
+  - platform: spotify
+    client_id: !secret spotify_client_id
+    client_secret: !secret spotify_client_secret
+
+switch:
+  - platform: template
+    switches:
+      homealarmswitch:
+        friendly_name: "Home Alarm"
+        value_template: "{{ is_state('alarm_control_panel.homealarm', 'armed_away') }}"
+        turn_on:
+          service: script.armalarm
+        turn_off:
+          service: script.disarmalarm
+  - platform: mqtt
+    name: "Printer"
+    command_topic: "cmnd/sonoff1/power"
+    state_topic: "stat/sonoff1/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+#  - platform: command_line
+#    switches:
+#      homeowl:
+#        command_on: "curl --request POST --data '=enable' https://homeowloauthwebapi.azurewebsites.net/api/owl/ha"
+#        command_off: "curl --request POST --data '=disable' https://homeowloauthwebapi.azurewebsites.net/api/owl/ha"
+#        command_state: "curl --request GET https://homeowloauthwebapi.azurewebsites.net/api/owl/ha"
+#        value_template: '{{ value == "true" }}'
+# Text to speech
+tts:
+  - platform: google
+
+google_assistant:
+  project_id: homeassistant-e7bfc
+  client_id: !secret gassistant_clientid
+  access_token: !secret gassistant_atoken
+  agent_user_id: homeassistant
+  api_key: !secret gassistant_apikey
+  exposed_domains:
+    - switch
+    - light
+    - media_player
+    - scene
+    - script
+
+#alexa:
+
+intent_script:
+  Gateway:  # Intent type
+    speech:
+      text: ok
+    action:
+      service_template: light.turn_{{lightaction}}
+      data:
+        entity_id: light.gateway_light_f0b429b41630
+  amzn1.ask.skill.eabc7e0d-f83c-42f4-bb19-cadf198cfc69:
+    action:
+      service: script.turn_on
+      entity_id: script.goodnightkids
+    speech:
+      type: plain
+      text: Sweet dreams 
+emulated_hue:
+  exposed_domains:
+    - light
+    - switch
+    - input_boolean
+    - media_player
+    - fan    
+
+mqtt:
+  broker: core-mosquitto
+  username: !secret mqttuser 
+  password: !secret mqttpass
+
+#FloorPlan
+#panel_custom:
+#  - name: floorplan
+#    sidebar_title: Floorplan
+#    sidebar_icon: mdi:home
+#    url_path: floorplan
+#    config: !include floorplan.yaml
+    
+script: !include_dir_merge_named scripts/
+group: !include groups.yaml
+automation: !include automations.yaml

@@ -1,0 +1,10 @@
+secrets.yaml
+deps/
+hadaemon/
+tts/
+www/
+.HA_VERSION
+.uuid
+known_devices.yaml
+/*.db
+/*.log

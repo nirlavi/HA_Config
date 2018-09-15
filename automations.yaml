@@ -1,0 +1,215 @@
+- id: radiator_off
+  alias: Radiator Off (Morning)
+  trigger:
+    platform: time
+    at: '7:00:00'
+  action:
+    service: switch.turn_off
+    entity_id: switch.radiator_kids
+- id: night_light
+  alias: Night Light
+  hide_entity: true
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -01:00:00
+  action:
+  - service: homeassistant.turn_on
+    entity_id: light.gateway_light_f0b429b41630
+    data:
+      rgb_color:
+      - 255
+      - 100
+      - 0
+  - service: homeassistant.turn_on
+    entity_id: light.lightstrip
+    data:
+      rgb_color:
+      - 255
+      - 100
+      - 0
+- id: night_light_off
+  alias: Night Light Off
+  hide_entity: true
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: 00:30:00
+  action:
+  - service: homeassistant.turn_off
+    entity_id: light.gateway_light_f0b429b41630
+  - service: homeassistant.turn_off
+    entity_id: light.lightstrip
+#- id: presence_alert
+#  alias: Home Presence Alert
+#  trigger:
+#  - platform: state
+#    entity_id: device_tracker.mi_a1_9300
+#    to: home
+#  action:
+#    service: notify.pushover
+#    data_template:
+#      message: '{{ trigger.to_state.attributes.friendly_name }} is {% if trigger.to_state.state
+#        == ''home'' %}back{% else %}away{% endif %}.
+#
+#        '
+#      title: Presence Changed
+- id: triggeralarm
+  alias: TriggerAlarm
+  hide_entity: true
+  trigger:
+  - entity_id: binary_sensor.door_window_sensor_158d000104babc
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_sensor_158d00014dc2a4
+    platform: state
+    to: 'on'
+  - entity_id: binary_sensor.motion_sensor_158d000130cd9a
+    platform: state
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.homealarm
+    state: armed_away
+  action:
+  - entity_id: alarm_control_panel.homealarm
+    service: alarm_control_panel.alarm_trigger
+  - data_template:
+      message: Front Door Opened.
+      title: Alarm
+    service: notify.pushover
+  - data:
+      entity_id: media_player.living_room_speakers
+      message: Entry Detected. Please identify yourself
+    service: tts.google_say
+#- id: door_opened
+#  alias: Door Opened
+#  trigger:
+#  - platform: state
+#    entity_id: binary_sensor.door_window_sensor_158d000104babc
+#    to: 'on'
+#  condition:
+#    condition: and
+#    conditions:
+#    - condition: state
+#      entity_id: device_tracker.mi_a1_9300
+#      state: not_home
+#    - condition: state
+#      entity_id: device_tracker.nirs_phone
+#      state: not_home
+#  action:
+#    service: notify.pushover
+#    data:
+#      message: Front Door Opened
+#      title: Presence Changed
+- id: kitchenlighttoggle
+  alias: Kitchen Light Toggle
+  trigger:
+  - platform: event
+    event_type: click
+    event_data:
+      entity_id: binary_sensor.switch_158d00010f436b
+      click_type: single
+  action:
+  - service: light.toggle
+    data:
+      entity_id: group.kitchen
+
+- id: bedroomlighttoggle
+  alias: Bedroom Light Toggle
+  trigger:
+  - platform: event
+    event_type: click
+    event_data:
+      entity_id: binary_sensor.switch_158d0001146391
+      click_type: single
+  action:
+  - service: light.toggle
+    data:
+      entity_id: group.bedroom
+
+#- id: bedroomromantic
+#  alias: Bedroom Romantic
+#  trigger:
+#  - platform: event
+#    event_type: click
+#    event_data:
+#      entity_id: binary_sensor.switch_158d0001146391
+#      click_type: long_click_press
+#  action:
+#  - service: light.turn_on
+#    data:
+#      entity_id: group.bedroom
+#      brightness: 255
+#      rgb_color:
+#      - 255
+#      - 205
+#      - 166
+
+#- id: gateway_toggle
+#  alias: Gateway Light Toggle
+#  trigger:
+#  - platform: event
+#    event_type: click
+#    event_data:
+#      entity_id: binary_sensor.switch_158d0001146391
+#      click_type: single
+#  action:
+#  - service: light.toggle
+#    data:
+#      entity_id: light.gateway_light_f0b429b41630
+#  - service: light.toggle
+#    data:
+#      entity_id: light.gateway_light_f0b429b41630
+- id: disarm_alarm
+  alias: Disarm Alarm
+  trigger:
+  - entity_id: device_tracker.nirs_phone
+    platform: state
+    to: home
+  - entity_id: device_tracker.mi_a1_9300
+    platform: state
+    to: home
+  action:
+    service: alarm_control_panel.alarm_disarm
+    data:
+      entity_id: alarm_control_panel.homealarm
+- id: alarm_triggered
+  alias: Alarm Triggered
+  trigger:
+    platform: state
+    entity_id: alarm_control_panel.homealarm
+    to: triggered
+  action:
+  - service: notify.pushover
+    data:
+      message: Alarm Triggered
+      title: Alarm
+  - service: tts.google_say
+    data:
+      entity_id: media_player.living_room_speakers
+      message: Alarm Triggered
+#- id: Bedroom_nightlight
+#  alias: Bedroom Nightlight
+#  trigger:
+#  - entity_id: binary_sensor.motion_sensor_158d000130cd9a
+#    platform: state
+#    to: 'on'
+#  action:
+#  - data:
+#      brightness: 60
+#      entity_id: light.bedroom_lightstrip
+#      rgb_color:
+#      - 255
+#      - 50
+#      - 0
+#    service: light.turn_on
+#  - delay: 00:02:00
+#  - data:
+#      entity_id: light.bedroom_lightstrip
+#    service: light.turn_off
+#  condition:
+#  - after: sunset
+#    condition: sun
+#  - condition: state
+#    entity_id: light.bedroom_lightstrip
+#    state: 'off'
