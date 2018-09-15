@@ -1,6 +1,6 @@
 name: Home
 views:
-    # The name of a view will be used as tab title.
+    # The name of a view will be used as tab title..
     # Might be used for other things in the future.
   - name: Main
     # Each view can have a different theme applied. Theme should be defined in the frontend.
