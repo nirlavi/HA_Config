@@ -28,8 +28,8 @@ views:
           - group.bedroomlights
       - type: entity-filter
         entities:
-          - device_tracker.mi_a1_9300
-          - device_tracker.nirs_phone
+          - device_tracker.morans_phone
+          - device_tracker.nirs_pixel
         state_filter:
         - 'home'
         card: 
