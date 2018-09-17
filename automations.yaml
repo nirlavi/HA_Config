@@ -104,19 +104,11 @@
 - id: arm_alarm
   alias: Arm Alarm
   trigger:
-    condition:
-      condition: and
-      conditions:
-        - condition: state
-          entity_id: device_tracker.nirs_pixel
-          to: away
-          for:
-            minutes: 5 
-        - condition: state
-          entity_id: device_tracker.morans_phone
-          to: away
-          for:
-            minutes: 5 
+      platform: state
+      entity_id: groups.homepeople
+      to: away
+      for:
+        minutes: 5 
   action:
   - service: notify.pushover
     data:

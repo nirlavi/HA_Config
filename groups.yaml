@@ -11,6 +11,7 @@ presence:
   name: People
   entities:
     - device_tracker.nirs_pixel
+    - device_tracker.morans_phone
     - device_tracker.yehuda_lavis_iphone
 weather:
   name: Weather
@@ -74,6 +75,11 @@ security:
     - binary_sensor.motion_sensor_158d00014dc2a4
     - binary_sensor.motion_sensor_158d000130cd9a
 
+tracking:
+  name: HomePeople
+  entities:
+    - device_tracker.nirs_pixel
+    - device_tracker.morans_phone
 default_view:
   name: Home
   view: yes
