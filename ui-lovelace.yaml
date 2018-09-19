@@ -9,23 +9,26 @@ views:
     # The cards to show on this view.
     cards:
       - type: picture-glance
-        image: https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=240&w=495
-        title: Living
+        image: /local/livingroom.jpg
+        title: Living Room
         entities:
           - binary_sensor.motion_sensor_158d00014dc2a4
           - binary_sensor.door_window_sensor_158d000104babc
           - binary_sensor.livingroom_tv
       - type: picture-glance
-        image: https://images.pexels.com/photos/356048/pexels-photo-356048.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=295&w=490
         title: Kitchen
         entities:
-          - group.kitchen
+          - light.kitchen_lights
+        state_image:
+          "on": /local/kitchen.jpg
+          "off": /local/kitchendark.jpg
+        entity: light.kitchen_lights
       - type: picture-glance
         image: https://images.pexels.com/photos/356048/pexels-photo-356048.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=295&w=490
         title: Bedroom
         entities:
           - binary_sensor.motion_sensor_158d000130cd9a
-          - group.bedroomlights
+          - light.bedroom_lights
       - type: entity-filter
         entities:
           - device_tracker.morans_phone
@@ -34,10 +37,14 @@ views:
         - 'home'
         card: 
           type: glance
-          title: People at home
+          title: Who's home
       - type: entity-filter
         entities:
-          - group.all_lights
+          - group.bedroomlights
+          - light.gateway_light_f0b429b41630
+          - light.lightstrip
+          - group.kitchen
+          - switch.printer
         state_filter:
           - 'on'
         card:
@@ -49,6 +56,11 @@ views:
           - sensor.google_wifi_uptime
           - switch.printer
           - alarm_control_panel.homealarm
-      - type: media-control
-        entity: media_player.spotify
+      - type: conditional
+        conditions:
+          - entity: media_player.spotify
+            state: "playing"
+        card:
+          type: media-control
+          entity: media_player.spotify
 

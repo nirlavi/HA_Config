@@ -28,23 +28,23 @@ devices:
 livingroom:
   name: Living Room
   entities:
-kitchen:
-  name: Kitchen
-  entities:
-    - light.kitchen_light1
-    - light.kitchen_light2
-    - light.kitchen_light3
+# kitchen:
+#   name: Kitchen
+#   entities:
+#     - light.kitchen_light1
+#     - light.kitchen_light2
+#     - light.kitchen_light3
 bedroom:
   name: Bedroom
   entities:
     - sensor.temperature_158d0001635a43
     - light.bedroom_light1
     - light.bedroom_light2
-bedroomlights:
-  name: Bedroom Lights
-  entities:
-    - light.bedroom_light1
-    - light.bedroom_light2
+# bedroomlights:
+#   name: Bedroom Lights
+#   entities:
+#     - light.bedroom_light1
+#     - light.bedroom_light2
 kidsroom:
   name: Kids Room
   entities:

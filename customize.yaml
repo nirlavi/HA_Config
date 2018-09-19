@@ -15,6 +15,7 @@ light.gateway_light_f0b429b41630:
   emulated_hue_name: Gateway Light
 binary_sensor.door_window_sensor_158d000104babc:
   friendly_name: Front Door
+  device_class: door
 binary_sensor.switch_158d00010f436b:
   friendly_name: Kitchen Lights Button
   hidden: true

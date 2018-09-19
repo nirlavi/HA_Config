@@ -144,6 +144,18 @@ light:
       !secret yeelight_bedroom2:
         name: Bedroom Light2
         transition: 1000 
+  - platform: group
+    name: Kitchen Lights
+    entities:
+      - light.kitchen_light1
+      - light.kitchen_light2
+      - light.kitchen_light3
+  - platform: group
+    name: Bedroom Lights
+    entities:
+      - light.bedroom_light1
+      - light.bedroom_light2
+
 
 notify:
   - name: Pushover
