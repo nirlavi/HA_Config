@@ -56,12 +56,6 @@ network:
     - sensor.google_wifi_status
     - sensor.google_wifi_uptime
     - sensor.google_wifi_new_version
-scenes:
-  name: Scenes
-  control: hidden
-  entities:
-    - script.morningscene
-    - script.eveningscene
 automations:
   name: automations
   view: yes
@@ -97,3 +91,9 @@ default_view:
     - group.scenes
     - media_player.spotify
     
+# scenes:
+#   name: Scenes
+#   control: hidden
+#   entities:
+#     - script.morningscene
+#     - script.eveningscene
