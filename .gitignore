@@ -3,6 +3,7 @@ deps/
 hadaemon/
 tts/
 www/
+.ssh/
 .HA_VERSION
 .uuid
 known_devices.yaml
