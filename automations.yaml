@@ -106,7 +106,7 @@
   trigger:
       platform: state
       entity_id: groups.homepeople
-      to: away
+      to: not_home
       for:
         minutes: 5 
   action:
