@@ -92,10 +92,10 @@ sensor:
       - new_version
   - platform: template
     sensors:
-      phil_status:
+      nir_status:
         value_template: '{{ states.input_select.nir_status_dropdown.state }}'
         friendly_name: 'Nir'
-      helen_status:
+      moran_status:
         value_template: '{{ states.input_select.moran_status_dropdown.state }}'
         friendly_name: 'Moran'  
 
@@ -258,7 +258,7 @@ input_select:
       - Extended Away
     initial: Home  
   moran_status_dropdown:
-    name: Nir
+    name: Moran
     options:
       - Home
       - Just Arrived
@@ -266,6 +266,7 @@ input_select:
       - Away
       - Extended Away
     initial: Home  
+
 #alexa:
 
 alexa:
