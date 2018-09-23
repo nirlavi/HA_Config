@@ -74,6 +74,12 @@ homepeople:
   entities:
     - device_tracker.nirs_pixel
     - device_tracker.morans_phone
+
+people_status:
+  name: People Status
+  entities:
+    - sensor.nir_status
+    - sensor.moran_status
 default_view:
   name: Home
   view: yes
@@ -88,6 +94,7 @@ default_view:
     - group.general
     - group.bedroom
     - group.kidsroom
+    - group.people_status
     - group.scenes
     - media_player.spotify
     

@@ -115,3 +115,39 @@
     service: notify.pushover
   - entity_id: alarm_control_panel.homealarm
     service: alarm_control_panel.alarm_arm_away
+
+# Presence
+
+- alias: Mark person as just arrived
+  trigger:
+    - platform: state
+      entity_id: device_tracker.nirs_pixel
+      from: 'not_home'
+      to: 'home'
+    - platform: state
+      entity_id: device_tracker.morans_phone
+      from: 'not_home'
+      to: 'home'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'device_tracker.nirs_pixel' %}
+            input_select.nir_status_dropdown
+          {% else %}
+            input_select.moran_status_dropdown
+          {% endif %}
+        option: >
+          {% if trigger.entity_id == 'device_tracker.nirs_pixel' %}
+            {% if states.input_select.nir_status_dropdown.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% else %}
+            {% if states.input_select.moran_status_dropdown.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% endif %}

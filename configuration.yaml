@@ -54,7 +54,31 @@ logbook:
 sun:
 
 device_tracker:
-  - platform: bluetooth_tracker   
+  - platform: bluetooth_tracker
+    new_device_defaults:
+      track_new_devices: False
+      hide_if_away: True
+  - platform: nmap_tracker
+    hosts: 192.168.86.0/24
+    home_interval: 3
+    exclude:
+      - !secret google_wifi_ip
+      - !secret hass_ip
+      - !secret livingroom_tv_ip
+      - !secret mediacenter_ip
+      - !secret mi_box_ip
+      - !secret xbox_ip
+      - !secret yeelight_ip
+      - !secret yeelight_bulb1
+      - !secret yeelight_bulb2
+      - !secret yeelight_kitchen3
+      - !secret yeelight_bedroom1
+      - !secret yeelight_bedroom2
+      - !secret homemini_1_ip
+    new_device_defaults:
+      track_new_devices: False
+      hide_if_away: True
+    
 
 sensor:
   - platform: fastdotcom
@@ -66,6 +90,14 @@ sensor:
       - status
       - uptime
       - new_version
+  - platform: template
+    sensors:
+      phil_status:
+        value_template: '{{ states.input_select.nir_status_dropdown.state }}'
+        friendly_name: 'Nir'
+      helen_status:
+        value_template: '{{ states.input_select.moran_status_dropdown.state }}'
+        friendly_name: 'Moran'  
 
 #Weather Prediction
   - platform: darksky
@@ -215,30 +247,67 @@ google_assistant:
     - scene
     - script
 
+input_select:
+  nir_status_dropdown:
+    name: Nir
+    options:
+      - Home
+      - Just Arrived
+      - Just Left
+      - Away
+      - Extended Away
+    initial: Home  
+  moran_status_dropdown:
+    name: Nir
+    options:
+      - Home
+      - Just Arrived
+      - Just Left
+      - Away
+      - Extended Away
+    initial: Home  
 #alexa:
 
-intent_script:
-  Gateway:  # Intent type
-    speech:
-      text: ok
-    action:
-      service_template: light.turn_{{lightaction}}
-      data:
-        entity_id: light.gateway_light_f0b429b41630
-  amzn1.ask.skill.eabc7e0d-f83c-42f4-bb19-cadf198cfc69:
-    action:
-      service: script.turn_on
-      entity_id: script.goodnightkids
-    speech:
-      type: plain
-      text: Sweet dreams 
-emulated_hue:
-  exposed_domains:
-    - light
-    - switch
-    - input_boolean
-    - media_player
-    - fan    
+alexa:
+  smart_home:
+    filter:
+    #   include_entities:
+    #     - light.kitchen
+    #     - light.kitchen_left
+      include_domains:
+        - switch
+        - light
+      # exclude_entities:
+      #   - switch.outside
+    # entity_config:
+    #   light.kitchen:
+    #     name: Custom Name for Alexa
+    #     description: The light in the kitchen
+    #   switch.stairs:
+    #     display_categories: LIGHT
+
+# intent_script:
+#   Gateway:  # Intent type
+#     speech:
+#       text: ok
+#     action:
+#       service_template: light.turn_{{lightaction}}
+#       data:
+#         entity_id: light.gateway_light_f0b429b41630
+#   amzn1.ask.skill.eabc7e0d-f83c-42f4-bb19-cadf198cfc69:
+#     action:
+#       service: script.turn_on
+#       entity_id: script.goodnightkids
+#     speech:
+#       type: plain
+#       text: Sweet dreams 
+# emulated_hue:
+#   exposed_domains:
+#     - light
+#     - switch
+#     - input_boolean
+#     - media_player
+#     - fan    
 
 mqtt:
   broker: core-mosquitto
