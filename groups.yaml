@@ -80,6 +80,19 @@ people_status:
   entities:
     - sensor.nir_status
     - sensor.moran_status
+
+nir_presence:
+  name: Nir presence
+  entities:
+    - device_tracker.nirs_pixel
+    - device_tracker.807abf6fb633
+
+moran_presence:
+  name: Morans presence
+  entities:
+    - device_tracker.morans_phone
+    - device_tracker.galaxys7edgelan
+
 default_view:
   name: Home
   view: yes

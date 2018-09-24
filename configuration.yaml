@@ -97,8 +97,20 @@ sensor:
         friendly_name: 'Nir'
       moran_status:
         value_template: '{{ states.input_select.moran_status_dropdown.state }}'
-        friendly_name: 'Moran'  
-
+        friendly_name: 'Moran'
+      mainpeople_status:
+        value_template: >
+          {% if is_state('sensor.nir_status', 'home') or is_state('sensor.moran_status', 'home') %}
+          home
+          {% elif is_state('sensor.nir_status', 'just arrived') or is_state('sensor.moran_status', 'just arrived') %}
+          just arrived
+          {% elif is_state('sensor.nir_status', 'just left') or is_state('sensor.moran_status', 'just left')%}
+          just left
+          {% elif is_state('sensor.nir_status', 'away') or is_state('sensor.moran_status', 'away')%}
+          away
+          {% elif is_state('sensor.nir_status', 'extended away') or is_state('sensor.moran_status', 'extended away')%}
+          extended away
+          {% endif %}
 #Weather Prediction
   - platform: darksky
     monitored_conditions:
