@@ -79,12 +79,9 @@
 - id: disarm_alarm
   alias: Disarm Alarm
   trigger:
-  - entity_id: group.nir_presence
+  - entity_id: group.people_status
     platform: state
-    to: home
-  - entity_id: group.moran_presence
-    platform: state
-    to: home
+    to: Just Arrived
   action:
     service: alarm_control_panel.alarm_disarm
     data:
@@ -103,7 +100,7 @@
 - id: arm_alarm
   alias: Arm Alarm
   trigger:
-  - entity_id: group.homepeople
+  - entity_id: group.people_status
     for:
       minutes: 5
     platform: state

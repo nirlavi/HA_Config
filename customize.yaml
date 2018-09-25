@@ -65,5 +65,7 @@ script.goodnightkids:
   icon: mdi:weather-night
 group.nir_presence:
   entity_picture: /local/nir.jpg
+  friendly_name: Nir
 group.moran_presence:
   entity_picture: /local/moran.jpg
+  friendly_name: Moran

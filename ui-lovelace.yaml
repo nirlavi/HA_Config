@@ -8,12 +8,37 @@ views:
     tab_icon: mdi:home-assistant
     # The cards to show on this view.
     cards:
+      - type: vertical-stack
+        cards:
+          - type: glance
+            column_width: calc(100% / 3)
+            entities:
+              - sensor.time
+              - entity: alarm_control_panel.homealarm
+                name: Alarm
+              - entity: sensor.fastcom_download
+                name: D/L Speed
+              - entity: sensor.google_wifi_uptime
+                name: Router Up
+              - entity: switch.printer
+                tap_action: toggle
+          - type: entity-filter
+            entities:
+              - group.nir_presence
+              - group.moran_presence
+            state_filter:
+            - 'home'
+            card: 
+              type: glance
+              title: Who's home
       - type: picture-glance
         image: /local/livingroom.jpg
         title: Living Room
         entities:
           - binary_sensor.motion_sensor_158d00014dc2a4
           - binary_sensor.door_window_sensor_158d000104babc
+          - binary_sensor.mediacenter_pc
+          - binary_sensor.xbox_one_x
           - binary_sensor.livingroom_tv
       - type: picture-glance
         title: Kitchen
@@ -28,16 +53,8 @@ views:
         title: Bedroom
         entities:
           - binary_sensor.motion_sensor_158d000130cd9a
+          - binary_sensor.mi_box
           - light.bedroom_lights
-      - type: entity-filter
-        entities:
-          - device_tracker.morans_phone
-          - device_tracker.nirs_pixel
-        state_filter:
-        - 'home'
-        card: 
-          type: glance
-          title: Who's home
       - type: entity-filter
         entities:
           - group.bedroomlights
@@ -49,13 +66,6 @@ views:
           - 'on'
         card:
           title: Eating power
-      - type: entities
-        entities:
-          - sensor.time
-          - sensor.fastcom_download
-          - sensor.google_wifi_uptime
-          - switch.printer
-          - alarm_control_panel.homealarm
       - type: conditional
         conditions:
           - entity: media_player.spotify
