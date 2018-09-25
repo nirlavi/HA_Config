@@ -79,10 +79,10 @@
 - id: disarm_alarm
   alias: Disarm Alarm
   trigger:
-  - entity_id: device_tracker.nirs_pixels_pixel
+  - entity_id: group.nir_presence
     platform: state
     to: home
-  - entity_id: device_tracker.morans_phone
+  - entity_id: group.moran_presence
     platform: state
     to: home
   action:
@@ -118,140 +118,140 @@
 
 # Presence
 
-# - id: markpersonarrived
-#   alias: Mark person as just arrived
-#   trigger:
-#     - platform: state
-#       entity_id: device_tracker.nirs_pixels_pixel
-#       from: 'not_home'
-#       to: 'home'
-#     - platform: state
-#       entity_id: device_tracker.morans_phone
-#       from: 'not_home'
-#       to: 'home'
-#   action:
-#     - service: input_select.select_option
-#       data_template:
-#         entity_id: >
-#           {% if trigger.entity_id == 'device_tracker.nirs_pixels_pixel' %}
-#             input_select.nir_status_dropdown
-#           {% else %}
-#             input_select.moran_status_dropdown
-#           {% endif %}
-#         option: >
-#           {% if trigger.entity_id == 'device_tracker.nirs_pixels_pixel' %}
-#             {% if states.input_select.nir_status_dropdown.state == 'Just Left' %}
-#               Home
-#             {% else %}
-#               Just Arrived
-#             {% endif %}
-#           {% else %}
-#             {% if states.input_select.moran_status_dropdown.state == 'Just Left' %}
-#               Home
-#             {% else %}
-#               Just Arrived
-#             {% endif %}
-#           {% endif %}
+- id: markpersonarrived
+  alias: Mark person as just arrived
+  trigger:
+    - platform: state
+      entity_id: group.nir_presence
+      from: 'not_home'
+      to: 'home'
+    - platform: state
+      entity_id: group.moran_presence
+      from: 'not_home'
+      to: 'home'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'group.nir_presence' %}
+            input_select.nir_status_dropdown
+          {% else %}
+            input_select.moran_status_dropdown
+          {% endif %}
+        option: >
+          {% if trigger.entity_id == 'group.nir_presence' %}
+            {% if states.input_select.nir_status_dropdown.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% else %}
+            {% if states.input_select.moran_status_dropdown.state == 'Just Left' %}
+              Home
+            {% else %}
+              Just Arrived
+            {% endif %}
+          {% endif %}
 
-# - id: markpersonhome
-#   alias: Mark person as home
-#   trigger:
-#     - platform: state
-#       entity_id: input_select.nir_status_dropdown
-#       to: 'Just Arrived'
-#       for:
-#         minutes: 10
-#     - platform: state
-#       entity_id: input_select.moran_status_dropdown
-#       to: 'Just Arrived'
-#       for:
-#         minutes: 10
-#     - platform: state
-#       entity_id: input_select.nir_status_dropdown
-#       from: 'Just Left'
-#       to: 'Just Arrived'
-#     - platform: state
-#       entity_id: input_select.moran_status_dropdown
-#       from: 'Just Left'
-#       to: 'Just Arrived'
-#   action:
-#     - service: input_select.select_option
-#       data_template:
-#         entity_id: >
-#           {% if trigger.entity_id == 'input_select.nir_status_dropdown' %}
-#             input_select.nir_status_dropdown
-#           {% else %}
-#             input_select.moran_status_dropdown
-#           {% endif %}
-#         option: Home
+- id: markpersonhome
+  alias: Mark person as home
+  trigger:
+    - platform: state
+      entity_id: input_select.nir_status_dropdown
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.moran_status_dropdown
+      to: 'Just Arrived'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.nir_status_dropdown
+      from: 'Just Left'
+      to: 'Just Arrived'
+    - platform: state
+      entity_id: input_select.moran_status_dropdown
+      from: 'Just Left'
+      to: 'Just Arrived'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'input_select.nir_status_dropdown' %}
+            input_select.nir_status_dropdown
+          {% else %}
+            input_select.moran_status_dropdown
+          {% endif %}
+        option: Home
 
-# - id: markpersonjustleft
-#   alias: Mark person as just left
-#   trigger:
-#     - platform: state
-#       entity_id: device_tracker.nirs_pixel
-#       from: 'home'
-#       to: 'not_home'
-#     - platform: state
-#       entity_id: device_tracker.morans_phone
-#       from: 'home'
-#       to: 'not_home'
-#   action:
-#     - service: input_select.select_option
-#       data_template:
-#         entity_id: >
-#           {% if trigger.entity_id == 'device_tracker.nirs_pixel' %}
-#             input_select.nir_status_dropdown
-#           {% else %}
-#             input_select.moran_status_dropdown
-#           {% endif %}
-#         option: Just Left
+- id: markpersonjustleft
+  alias: Mark person as just left
+  trigger:
+    - platform: state
+      entity_id: group.nir_presence
+      from: 'home'
+      to: 'not_home'
+    - platform: state
+      entity_id: group.moran_presence
+      from: 'home'
+      to: 'not_home'
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'group.nir_presence' %}
+            input_select.nir_status_dropdown
+          {% else %}
+            input_select.moran_status_dropdown
+          {% endif %}
+        option: Just Left
 
-# - id: markpersonaway
-#   alias: Mark person as away
-#   trigger:
-#     - platform: state
-#       entity_id: input_select.nir_status_dropdown
-#       to: 'Just Left'
-#       for:
-#         minutes: 10
-#     - platform: state
-#       entity_id: input_select.moran_status_dropdown
-#       to: 'Just Left'
-#       for:
-#         minutes: 10
-#   action:
-#     - service: input_select.select_option
-#       data_template:
-#         entity_id: >
-#           {% if trigger.entity_id == 'input_select.nir_status_dropdown' %}
-#             input_select.nir_status_dropdown
-#           {% else %}
-#             input_select.moran_status_dropdown
-#           {% endif %}
-#         option: Away
+- id: markpersonaway
+  alias: Mark person as away
+  trigger:
+    - platform: state
+      entity_id: input_select.nir_status_dropdown
+      to: 'Just Left'
+      for:
+        minutes: 10
+    - platform: state
+      entity_id: input_select.moran_status_dropdown
+      to: 'Just Left'
+      for:
+        minutes: 10
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'input_select.nir_status_dropdown' %}
+            input_select.nir_status_dropdown
+          {% else %}
+            input_select.moran_status_dropdown
+          {% endif %}
+        option: Away
 
-# - id: markpersonextendedaway
-#   alias: Mark person as extended away
-#   trigger:
-#     - platform: state
-#       entity_id: input_select.nir_status_dropdown
-#       to: 'Away'
-#       for:
-#         hours: 24
-#     - platform: state
-#       entity_id: input_select.moran_status_dropdown
-#       to: 'Away'
-#       for:
-#         hours: 24
-#   action:
-#     - service: input_select.select_option
-#       data_template:
-#         entity_id: >
-#           {% if trigger.entity_id == 'input_select.nir_status_dropdown' %}
-#             input_select.nir_status_dropdown
-#           {% else %}
-#             input_select.moran_status_dropdown
-#           {% endif %}
-#         option: Extended Away
+- id: markpersonextendedaway
+  alias: Mark person as extended away
+  trigger:
+    - platform: state
+      entity_id: input_select.nir_status_dropdown
+      to: 'Away'
+      for:
+        hours: 24
+    - platform: state
+      entity_id: input_select.moran_status_dropdown
+      to: 'Away'
+      for:
+        hours: 24
+  action:
+    - service: input_select.select_option
+      data_template:
+        entity_id: >
+          {% if trigger.entity_id == 'input_select.nir_status_dropdown' %}
+            input_select.nir_status_dropdown
+          {% else %}
+            input_select.moran_status_dropdown
+          {% endif %}
+        option: Extended Away
 

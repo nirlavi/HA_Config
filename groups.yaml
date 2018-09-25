@@ -78,8 +78,8 @@ homepeople:
 people_status:
   name: People Status
   entities:
-    - sensor.nir_status
-    - sensor.moran_status
+    - group.nir_presence
+    - group.moran_presence
 
 nir_presence:
   name: Nir presence
@@ -88,7 +88,7 @@ nir_presence:
     - device_tracker.807abf6fb633
 
 moran_presence:
-  name: Morans presence
+  name: Moran presence
   entities:
     - device_tracker.morans_phone
     - device_tracker.galaxys7edgelan
@@ -98,7 +98,6 @@ default_view:
   view: yes
   entities:
     - group.weather
-    - group.presence
     - group.network
     - group.devices
 #    - group.livingroom

@@ -63,7 +63,7 @@ group.all_automations:
 script.goodnightkids:
   friendly_name: Good Night Kids
   icon: mdi:weather-night
-sensor.nir_status:
+group.nir_presence:
   entity_picture: /local/nir.jpg
-sensor.moran_status:
+group.moran_presence:
   entity_picture: /local/moran.jpg
