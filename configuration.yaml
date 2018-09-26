@@ -290,8 +290,12 @@ alexa:
       include_domains:
         - switch
         - light
-      # exclude_entities:
-      #   - switch.outside
+      exclude_entities:
+        - light.bedroom_light1
+        - light.bedroom_light2
+        - light.kitchen_light1
+        - light.kitchen_light2
+        - light.kitchen_light3
     # entity_config:
     #   light.kitchen:
     #     name: Custom Name for Alexa
