@@ -69,6 +69,7 @@ views:
           - 'on'
         card:
           title: Eating power
+        show_empty: false
       - type: conditional
         conditions:
           - entity: media_player.spotify
