@@ -69,12 +69,6 @@ security:
     - binary_sensor.motion_sensor_158d00014dc2a4
     - binary_sensor.motion_sensor_158d000130cd9a
 
-homepeople:
-  name: HomePeople
-  entities:
-    - device_tracker.nirs_pixel
-    - device_tracker.morans_phone
-
 people_status:
   name: People Status
   entities:

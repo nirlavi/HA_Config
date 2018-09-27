@@ -111,7 +111,7 @@
 - id: disarm_alarm
   alias: Disarm Alarm
   trigger:
-  - entity_id: group.people_status
+  - entity_id: sensor.mainpeople_status
     platform: state
     to: Just Arrived
   action:
@@ -132,11 +132,11 @@
 - id: arm_alarm
   alias: Arm Alarm
   trigger:
-  - entity_id: group.people_status
+  - entity_id: sensor.mainpeople_status
     # for:
     #   minutes: 5
     platform: state
-    to: away
+    to: Away
   action:
   - data:
       message: Arming Alarm
