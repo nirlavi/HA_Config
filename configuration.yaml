@@ -107,7 +107,7 @@ sensor:
           {% elif is_state('sensor.nir_status', 'Just Left') or is_state('sensor.moran_status', 'Just Left')%}
           Just Left
           {% elif is_state('sensor.nir_status', 'Away') or is_state('sensor.moran_status', 'Away')%}
-          away
+          Away
           {% elif is_state('sensor.nir_status', 'Extended Away') or is_state('sensor.moran_status', 'Extended Away')%}
           Extended Away
           {% endif %}
@@ -135,6 +135,7 @@ alarm_control_panel:
     pending_time: 30
     delay_time: 20
     trigger_time: 30
+    disarm_after_trigger: true
     disarmed:
       trigger_time: 0
     armed_home:

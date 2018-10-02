@@ -16,10 +16,6 @@ views:
               - sensor.time
               - entity: alarm_control_panel.homealarm
                 name: Alarm
-              - entity: sensor.fastcom_download
-                name: D/L Speed
-              - entity: sensor.google_wifi_uptime
-                name: Router Up
               - entity: switch.printer
                 tap_action: toggle
           - type: entity-filter
