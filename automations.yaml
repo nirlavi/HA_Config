@@ -1,3 +1,5 @@
+# Night Lighting ##################################################
+
 - id: night_light
   alias: Night Light
   hide_entity: true
@@ -32,6 +34,9 @@
     entity_id: light.gateway_light_f0b429b41630
   - service: homeassistant.turn_off
     entity_id: light.lightstrip
+
+# Manual Light Control ##################################################
+
 - id: kitchenlighttoggle
   alias: Kitchen Light Toggle
   trigger:
@@ -53,13 +58,13 @@
     event_type: click
     platform: event
   action:
-  - data:
-      entity_id: light.kitchen_lights
-      rgb_color:
-      - 255
-      - 183
-      - 123
-    service: light.turn_on
+    - data:
+        entity_id: light.kitchen_lights
+        rgb_color:
+        - 255
+        - 183
+        - 123
+      service: light.turn_on
 - id: bedroomlighttoggle
   alias: Bedroom Light Toggle
   trigger:
@@ -69,25 +74,46 @@
       entity_id: binary_sensor.switch_158d0001146391
       click_type: single
   action:
-  - service: light.toggle
-    data:
-      entity_id: light.bedroom_lights
+    - service: light.toggle
+      data:
+        entity_id: light.bedroom_lights
 - id: bedroomlightsethome
   alias: Bedroom Light Set Home
+  trigger:
+    - platform: event
+      event_type: click
+      event_data:
+        entity_id: binary_sensor.switch_158d0001146391
+        click_type: double
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.bedroom_lights
+        brightness: 204
+        rgb_color:
+        - 255
+        - 183
+        - 123
+- id: bedroomlightred
+  alias: Bedroom Light Set Red
   trigger:
   - platform: event
     event_type: click
     event_data:
       entity_id: binary_sensor.switch_158d0001146391
-      click_type: double
+      click_type: long_click_press
   action:
   - service: light.turn_on
     data:
       entity_id: light.bedroom_lights
+      brightness: 255
       rgb_color:
       - 255
-      - 183
-      - 123
+      - 0
+      - 0
+
+# Alarm Automations ##################################################
+
 - id: triggeralarm
   alias: TriggerAlarm
   hide_entity: true
@@ -125,7 +151,7 @@
     entity_id: alarm_control_panel.homealarm
     to: triggered
   action:
-  - service: notify.pushover
+  - service: notify.everyone
     data:
       message: Alarm Triggered
       title: Security Message
@@ -138,14 +164,15 @@
     platform: state
     to: Away
   action:
-  - data:
+  - service: notify.everyone
+    data:
       message: Arming Alarm
       title: Security Message
-    service: notify.pushover
-  - entity_id: alarm_control_panel.homealarm
-    service: alarm_control_panel.alarm_arm_away
+  - service: alarm_control_panel.alarm_arm_away
+    entity_id: alarm_control_panel.homealarm
+    
 
-# Presence
+# Prescence Automations ##################################################
 
 - id: markpersonarrived
   alias: Mark person as just arrived
@@ -284,3 +311,62 @@
           {% endif %}
         option: Extended Away
 
+- id: WelcomeHomeNir
+  alias: Welcome Home Greeting Nir
+  trigger:
+    - platform: state
+      entity_id: sensor.nir_status
+      to: 'Just Arrived'
+  condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: sensor.moran_status
+          state: 'Away'
+        - condition: state
+          entity_id: sensor.moran_status
+          state: 'Just Left'
+        - condition: state
+          entity_id: sensor.moran_status
+          state: 'Extended Away'
+  action:  
+    - service: media_player.turn_on
+      entity_id: media_player.living_room_speaker
+    - service: media_player.volume_set
+      entity_id: media_player.living_room_speaker
+      data:
+        volume_level: 0.5
+    - service: tts.google_say
+      entity_id: media_player.living_room_speaker
+      data:
+        message: 'Welcome Home Nir'
+
+- id: WelcomeHomeMoran
+  alias: Welcome Home Greeting Moran
+  trigger:
+    - platform: state
+      entity_id: sensor.moran_status
+      to: 'Just Arrived'
+  condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: sensor.nir_status
+          state: 'Away'
+        - condition: state
+          entity_id: sensor.nir_status
+          state: 'Just Left'
+        - condition: state
+          entity_id: sensor.nir_status
+          state: 'Extended Away'
+  action:  
+    - service: media_player.turn_on
+      entity_id: media_player.living_room_speaker
+    - service: media_player.volume_set
+      entity_id: media_player.living_room_speaker
+      data:
+        volume_level: 0.5
+    - service: tts.google_say
+      entity_id: media_player.living_room_speaker
+      data:
+        message: 'Welcome Home Moran'

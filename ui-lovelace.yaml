@@ -44,11 +44,16 @@ views:
         state_image:
           "on": /local/kitchen.jpg
           "off": /local/kitchendark.jpg
+          "unavailable": /local/kitchendark.jpg
         entity: light.kitchen_lights
         name: Kitchen Lights
         tap_action: toggle
       - type: picture-glance
-        image: https://images.pexels.com/photos/356048/pexels-photo-356048.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=295&w=490
+        state_image:
+          "on": /local/bedroom.jpg
+          "off": /local/bedroom_dark.jpg
+          "unavailable": /local/bedroom_dark.jpg
+        entity: light.bedroom_lights
         title: Bedroom
         entities:
           - binary_sensor.motion_sensor_158d000130cd9a
@@ -56,10 +61,10 @@ views:
           - light.bedroom_lights
       - type: entity-filter
         entities:
-          - group.bedroomlights
+          - light.bedroom_lights
           - light.gateway_light_f0b429b41630
           - light.lightstrip
-          - group.kitchen
+          - light.kitchen_lights
           - switch.printer
         state_filter:
           - 'on'

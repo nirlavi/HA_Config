@@ -59,7 +59,9 @@ device_tracker:
       track_new_devices: False
       hide_if_away: True
   - platform: nmap_tracker
-    hosts: 192.168.86.0/24
+    hosts: 
+      - !secret nirs_pixel_ip
+      - !secret morans_phone_ip
     home_interval: 3
     exclude:
       - !secret google_wifi_ip
@@ -210,13 +212,26 @@ notify:
   - name: BedroomTv
     platform: nfandroidtv
     host: !secret mi_box_ip
+  - name: Everyone
+    platform: group
+    services:
+      - service: pushover
+        data:
+          target: "pushover"
+      - service: nfandroidtv
+        data:
+          target:
+            bedroomtv
 
 media_player:
-  - platform: cast
-    host: !secret homemini_1_ip
   - platform: spotify
     client_id: !secret spotify_client_id
     client_secret: !secret spotify_client_secret
+
+cast:
+  media_player:
+    - host: !secret homemini_1_ip
+    - host: !secret ccast_livingroom_ip
 
 switch:
   - platform: template
