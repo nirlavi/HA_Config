@@ -274,6 +274,25 @@ google_assistant:
     - media_player
     - scene
     - script
+  entity_config:
+    - light.kitchen_ligh1
+        expose: false
+    - light.kitchen_ligh2
+        expose: false
+    - light.kitchen_ligh3
+        expose: false        
+    - light.yeelight_rgb_7811dca616a7
+        expose: false        
+    - light.yeelight_rgb_7811dcdcf6a1
+        expose: false        
+    - light.yeelight_rgb_7811dcdcff3a
+        expose: false        
+    - light.yeelight_rgb_7811dce0fe89
+        expose: false        
+    - light.yeelight_rgb_7811dce12648
+        expose: false        
+    - light.yeelight_strip_34ce0087e666
+        expose: false        
 
 input_select:
   nir_status_dropdown:
