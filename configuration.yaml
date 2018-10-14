@@ -263,7 +263,7 @@ tts:
   - platform: google
 
 google_assistant:
-  project_id: homeassistant-e7bfc
+  project_id: hass-7377a
   client_id: !secret gassistant_clientid
   access_token: !secret gassistant_atoken
   agent_user_id: homeassistant
