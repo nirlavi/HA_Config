@@ -316,29 +316,18 @@ input_select:
       - Extended Away
     initial: Home  
 
-#alexa:
-
-alexa:
-  smart_home:
-    filter:
-    #   include_entities:
-    #     - light.kitchen
-    #     - light.kitchen_left
-      include_domains:
-        - switch
-        - light
-      exclude_entities:
-        - light.bedroom_light1
-        - light.bedroom_light2
-        - light.kitchen_light1
-        - light.kitchen_light2
-        - light.kitchen_light3
-    # entity_config:
-    #   light.kitchen:
-    #     name: Custom Name for Alexa
-    #     description: The light in the kitchen
-    #   switch.stairs:
-    #     display_categories: LIGHT
+# alexa:
+#   smart_home:
+#     filter:
+#       include_domains:
+#         - switch
+#         - light
+#       exclude_entities:
+#         - light.bedroom_light1
+#         - light.bedroom_light2
+#         - light.kitchen_light1
+#         - light.kitchen_light2
+#         - light.kitchen_light3
 
 # intent_script:
 #   Gateway:  # Intent type
@@ -368,6 +357,11 @@ mqtt:
   username: !secret mqttuser 
   password: !secret mqttpass
 
+remote:
+  - platform: harmony
+    name: Harmony
+    host: !secret harmony_ip
+    
 #FloorPlan
 #panel_custom:
 #  - name: floorplan

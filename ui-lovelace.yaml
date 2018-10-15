@@ -28,6 +28,13 @@ views:
               type: glance
               title: Who's home
             show_empty: false
+          - type: conditional
+            conditions:
+              - entity: media_player.spotify
+                state: "playing"
+            card:
+              type: media-control
+              entity: media_player.spotify
       - type: picture-glance
         image: /local/livingroom.jpg
         title: Living Room
@@ -71,11 +78,4 @@ views:
         card:
           title: Eating power
         show_empty: false
-      - type: conditional
-        conditions:
-          - entity: media_player.spotify
-            state: "playing"
-        card:
-          type: media-control
-          entity: media_player.spotify
 
