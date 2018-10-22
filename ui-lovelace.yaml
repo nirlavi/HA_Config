@@ -42,7 +42,8 @@ views:
           - binary_sensor.motion_sensor_158d00014dc2a4
           - binary_sensor.door_window_sensor_158d000104babc
           - binary_sensor.mediacenter_pc
-          - binary_sensor.xbox_one_x
+          - switch.xboxswitch
+          #- binary_sensor.xbox_one_x
           - binary_sensor.livingroom_tv
       - type: picture-entity
         title: Kitchen
@@ -73,6 +74,7 @@ views:
           - light.lightstrip
           - light.kitchen_lights
           - switch.printer
+          - switch.xboxswitch
         state_filter:
           - 'on'
         card:

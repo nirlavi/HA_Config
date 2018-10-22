@@ -63,20 +63,7 @@ device_tracker:
       - !secret nirs_pixel_ip
       - !secret morans_phone_ip
     home_interval: 3
-    exclude:
-      - !secret google_wifi_ip
-      - !secret hass_ip
-      - !secret livingroom_tv_ip
-      - !secret mediacenter_ip
-      - !secret mi_box_ip
-      - !secret xbox_ip
-      - !secret yeelight_ip
-      - !secret yeelight_bulb1
-      - !secret yeelight_bulb2
-      - !secret yeelight_kitchen3
-      - !secret yeelight_bedroom1
-      - !secret yeelight_bedroom2
-      - !secret homemini_1_ip
+    scan_options: "-sn"
     new_device_defaults:
       track_new_devices: False
       hide_if_away: True
@@ -151,12 +138,18 @@ binary_sensor:
   - platform: ping
     host: !secret livingroom_tv_ip
     name: "LivingRoom TV"
+    count: 2
+    scan_interval: 10
   - platform: ping
     host: !secret mediacenter_ip
     name: "MediaCenter PC"
+    count: 2
+    scan_interval: 30
   - platform: ping
     host: !secret xbox_ip
     name: "Xbox One X"
+    count: 2
+    scan_interval: 10
   - platform: ping
     host: !secret mi_box_ip
     name: "Mi Box"
@@ -231,7 +224,8 @@ media_player:
 cast:
   media_player:
     - host: !secret homemini_1_ip
-    - host: !secret ccast_livingroom_ip
+    - host: !secret homemini_2_ip
+    - host: !secret ccast_soundbar_ip
 
 switch:
   - platform: template
@@ -243,6 +237,48 @@ switch:
           service: script.armalarm
         turn_off:
           service: script.disarmalarm
+      xboxswitch:
+        friendly_name: "Xbox"
+        value_template: "{{ is_state('binary_sensor.xbox_one_x', 'on') }}"
+        turn_on:
+          service: remote.send_command
+          data:
+            device: 57887048
+            command:
+              - PowerOn
+        turn_off:
+          service: remote.send_command
+          data:
+            device: 57887048
+            command:
+              - PowerOff
+        icon_template: >-
+                  {% if is_state('binary_sensor.xbox_one_x', 'on') %}
+                    mdi:xbox
+                  {% else %}
+                    mdi:xbox
+                  {% endif %}      
+      tvswitch:
+        friendly_name: "Living Room Tv"
+        value_template: "{{ is_state('binary_sensor.livingroom_tv', 'on') }}"
+        turn_on:
+          service: remote.send_command
+          data:
+            device: 57938631
+            command:
+              - PowerToggle
+        turn_off:
+          service: remote.send_command
+          data:
+            device: 57938631
+            command:
+              - PowerToggle
+        icon_template: >-
+                  {% if is_state('binary_sensor.livingroom_tv', 'on') %}
+                    mdi:television
+                  {% else %}
+                    mdi:television
+                  {% endif %}      
   - platform: mqtt
     name: "Printer"
     command_topic: "cmnd/sonoff1/power"
