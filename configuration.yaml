@@ -139,7 +139,7 @@ binary_sensor:
     host: !secret livingroom_tv_ip
     name: "LivingRoom TV"
     count: 2
-    scan_interval: 10
+    scan_interval: 20
   - platform: ping
     host: !secret mediacenter_ip
     name: "MediaCenter PC"
@@ -149,7 +149,7 @@ binary_sensor:
     host: !secret xbox_ip
     name: "Xbox One X"
     count: 2
-    scan_interval: 10
+    scan_interval: 20
   - platform: ping
     host: !secret mi_box_ip
     name: "Mi Box"

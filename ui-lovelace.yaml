@@ -18,6 +18,21 @@ views:
                 name: Alarm
               - entity: switch.printer
                 tap_action: toggle
+          - type: glance
+            column_width: calc(100% / 3)
+            show_name: false
+            show_state: false
+            title: "Air Conditioner"
+            entities:
+              - entity: script.ac_off
+                tap_action: toggle
+                icon: mdi:air-conditioner
+              - entity: script.ac_cool
+                icon: mdi:snowflake
+                tap_action: toggle
+              - entity: script.ac_heat
+                icon: mdi:fire
+                tap_action: toggle
           - type: entity-filter
             entities:
               - group.nir_presence
