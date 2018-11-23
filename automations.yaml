@@ -151,7 +151,7 @@
     entity_id: alarm_control_panel.homealarm
     to: triggered
   action:
-  - service: notify.everyone
+  - service: notify.home
     data:
       message: Alarm Triggered
       title: Security Message
@@ -164,7 +164,7 @@
     platform: state
     to: Away
   action:
-  - service: notify.everyone
+  - service: notify.home
     data:
       message: Arming Alarm
       title: Security Message
@@ -182,7 +182,7 @@
     to: Idle
     from: Working
   action:
-  - service: notify.everyone
+  - service: notify.home
     data:
       message: Washing Machine Finished
       title: Laundry Alert
