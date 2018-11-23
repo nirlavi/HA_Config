@@ -58,16 +58,6 @@ device_tracker:
     new_device_defaults:
       track_new_devices: False
       hide_if_away: True
-  - platform: nmap_tracker
-    hosts: 
-      - !secret nirs_pixel_ip
-      - !secret morans_phone_ip
-    home_interval: 3
-    scan_options: "-sn"
-    new_device_defaults:
-      track_new_devices: False
-      hide_if_away: True
-    
 
 sensor:
   - platform: fastdotcom
@@ -100,6 +90,15 @@ sensor:
           {% elif is_state('sensor.nir_status', 'Extended Away') or is_state('sensor.moran_status', 'Extended Away')%}
           Extended Away
           {% endif %}
+      washingmachine_status:
+        value_template: >
+          {% if states('sensor.sensor.washing_machine_current') |float == 0.0 %}
+          Off
+          {% elif states('sensor.sensor.washing_machine_current') |float <= 0.3 %}
+          Idle
+          {% elif states('sensor.sensor.washing_machine_current') |float > 0.3 %}
+          Working
+          {% endif %}
 #Weather Prediction
   - platform: darksky
     monitored_conditions:
@@ -117,6 +116,11 @@ sensor:
   - platform: time_date
     display_options:
       - 'time'
+  - platform: mqtt
+    name: Washing Machine Current
+    state_topic: "tele/sonoffpow1/ENERGY"
+    value_template: "{{ value_json.Current }}"
+    unit_of_measurement: 'amps'
 
 alarm_control_panel:
   - platform: manual
@@ -205,6 +209,10 @@ notify:
   - name: BedroomTv
     platform: nfandroidtv
     host: !secret mi_box_ip
+  - name: Home
+    platform: html5
+    gcm_api_key: !secret gcm_api_key
+    gcm_sender_id: !secret gcm_sender_id
   - name: Everyone
     platform: group
     services:
@@ -213,8 +221,7 @@ notify:
           target: "pushover"
       - service: nfandroidtv
         data:
-          target:
-            bedroomtv
+          target: "bedroomtv"
 
 media_player:
   - platform: spotify
@@ -397,7 +404,10 @@ remote:
   - platform: harmony
     name: Harmony
     host: !secret harmony_ip
-    
+
+recorder:
+  db_url: mysql://hass:hadb@core-mariadb/homeassistant
+
 #FloorPlan
 #panel_custom:
 #  - name: floorplan

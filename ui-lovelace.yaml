@@ -18,6 +18,9 @@ views:
                 name: Alarm
               - entity: switch.printer
                 tap_action: toggle
+              - entity: sensor.washingmachine_status
+                name: WashingMachine
+                icon: mdi:washing-machine
           - type: glance
             column_width: calc(100% / 3)
             show_name: false
