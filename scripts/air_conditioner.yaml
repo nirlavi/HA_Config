@@ -1,0 +1,24 @@
+ac_off:
+    alias: "AirConditioner_Off"
+    sequence:
+      - service: remote.send_command
+        data:
+          device: 57938481
+          command:
+            - PowerToggle
+ac_heat:
+    alias: "AirConditioner_Heat"
+    sequence:
+      - service: remote.send_command
+        data:
+          device: 57938481
+          command:
+            - TempHotter
+ac_cool:
+    alias: "AirConditioner_Cool"
+    sequence:
+      - service: remote.send_command
+        data:
+          device: 57938481
+          command:
+            - TempCooler

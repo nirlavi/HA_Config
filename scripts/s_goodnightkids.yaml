@@ -1,0 +1,11 @@
+goodnightkids:
+    sequence:
+      - service: media_player.play_media
+        data:
+          entity_id: media_player.kidsspeaker
+          media_content_type: playlist
+          media_content_id: Pitz
+      - service: media_player.volume_set
+        data:
+          entity_id: media_player.kidsspeaker
+          volume_level: 0.05

@@ -58,7 +58,14 @@ device_tracker:
     new_device_defaults:
       track_new_devices: False
       hide_if_away: True
+  - platform: owntracks
 
+zone:
+  - name: Home
+    latitude: 31.865715
+    longitude: 34.732303
+    range: 100
+    icon: mdi:home
 sensor:
   - platform: fastdotcom
     minute:
@@ -92,11 +99,11 @@ sensor:
           {% endif %}
       washingmachine_status:
         value_template: >
-          {% if states('sensor.sensor.washing_machine_current') |float == 0.0 %}
+          {% if states('sensor.washing_machine_current') |float == 0.0 %}
           Off
-          {% elif states('sensor.sensor.washing_machine_current') |float <= 0.3 %}
+          {% elif states('sensor.washing_machine_current') |float <= 0.3 %}
           Idle
-          {% elif states('sensor.sensor.washing_machine_current') |float > 0.3 %}
+          {% elif states('sensor.washing_machine_current') |float > 0.3 %}
           Working
           {% endif %}
 #Weather Prediction
@@ -219,9 +226,20 @@ notify:
       - service: pushover
         data:
           target: "pushover"
+      - service: bedroomtv
+      - service: home
+  - name: Nir
+    platform: group
+    services:
+      # - service: pushover
+      #   data:
+      #     target: "pushover"
       - service: nfandroidtv
         data:
-          target: "bedroomtv"
+          target: "BedroomTv"
+      - service: html5
+        data:
+          target: ["nir_laptop", "nir_work", "nir_phone"]
 
 media_player:
   - platform: spotify
@@ -290,6 +308,14 @@ switch:
     name: "Printer"
     command_topic: "cmnd/sonoff1/power"
     state_topic: "stat/sonoff1/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+  - platform: mqtt
+    name: "KidsRadiator"
+    command_topic: "cmnd/sonoff2/power"
+    state_topic: "stat/sonoff2/POWER"
     qos: 1
     payload_on: "ON"
     payload_off: "OFF"

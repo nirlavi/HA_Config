@@ -21,6 +21,10 @@ views:
               - entity: sensor.washingmachine_status
                 name: WashingMachine
                 icon: mdi:washing-machine
+              - entity: switch.kidsradiator
+                name: Radiator (Kids)
+                icon: mdi:radiator
+                tap_action: toggle
           - type: glance
             column_width: calc(100% / 3)
             show_name: false

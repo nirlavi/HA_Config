@@ -43,7 +43,7 @@
   - event_data:
       click_type: single
       entity_id: binary_sensor.switch_158d00010f436b
-    event_type: click
+    event_type: xiaomi_aqara.click
     platform: event
   action:
   - data:
@@ -55,7 +55,7 @@
   - event_data:
       click_type: double
       entity_id: binary_sensor.switch_158d00010f436b
-    event_type: click
+    event_type: xiaomi_aqara.click
     platform: event
   action:
     - data:
@@ -69,7 +69,7 @@
   alias: Bedroom Light Toggle
   trigger:
   - platform: event
-    event_type: click
+    event_type: xiaomi_aqara.click
     event_data:
       entity_id: binary_sensor.switch_158d0001146391
       click_type: single
@@ -81,7 +81,7 @@
   alias: Bedroom Light Set Home
   trigger:
     - platform: event
-      event_type: click
+      event_type: xiaomi_aqara.click
       event_data:
         entity_id: binary_sensor.switch_158d0001146391
         click_type: double
@@ -98,7 +98,7 @@
   alias: Bedroom Light Set Red
   trigger:
   - platform: event
-    event_type: click
+    event_type: xiaomi_aqara.click
     event_data:
       entity_id: binary_sensor.switch_158d0001146391
       click_type: long_click_press
@@ -111,6 +111,19 @@
       - 255
       - 0
       - 0
+
+# Kids Radiator ##################################################
+
+- id: radiator_kids_off
+  alias: Kids radiator  Off
+  hide_entity: true
+  trigger:
+  - platform: time
+    at: '6:00:00'
+  action:
+  - service: homeassistant.turn_off
+    entity_id: switch.kidsradiator
+
 
 # Alarm Automations ##################################################
 
@@ -151,7 +164,7 @@
     entity_id: alarm_control_panel.homealarm
     to: triggered
   action:
-  - service: notify.home
+  - service: notify.nir
     data:
       message: Alarm Triggered
       title: Security Message
@@ -164,7 +177,7 @@
     platform: state
     to: Away
   action:
-  - service: notify.home
+  - service: notify.nir
     data:
       message: Arming Alarm
       title: Security Message
@@ -182,7 +195,7 @@
     to: Idle
     from: Working
   action:
-  - service: notify.home
+  - service: notify.everyone
     data:
       message: Washing Machine Finished
       title: Laundry Alert
